@@ -1,0 +1,8 @@
+applications:
+- path: target/CdiAsyncDemo.war
+  memory: 512M
+  instances: 1
+  domain: eu-gb.mybluemix.net
+  name: CdiAsyncDemo
+  host: CdiAsyncDemo
+  disk_quota: 1024M
