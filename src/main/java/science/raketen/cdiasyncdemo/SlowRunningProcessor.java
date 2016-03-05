@@ -18,16 +18,20 @@ package science.raketen.cdiasyncdemo;
 import java.util.concurrent.CompletableFuture;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 @RequestScoped
 public class SlowRunningProcessor {
+
+  @Inject
+  private MessageEndpoint messageEndpoint;
 
   @CDIAsynchronous
   public void asyncTask() {
     try {
       long sleep = 500 + (long) (Math.random() * 5000l);
       Thread.sleep(sleep);
-      System.out.println(this + " " + Thread.currentThread().getName() + " sleept: " + sleep);
+      messageEndpoint.pushMessage(this + " " + Thread.currentThread().getName() + " sleept: " + sleep);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

@@ -1,10 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+<head>
+<title>Echo Chamber</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+</head>
+<body>
+
+  <div>
+    <input type="text" id="nameinput" />
+  </div>
+  <div>
+    <button type="button" onclick="hello();">Hello</button>
+  </div>
+  <div id="helloMsg"></div>
+
+  <div id="messages"></div>
+
+  <!-- Script to utilise the WebSocket -->
+  <script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script type="text/javascript">
+			var webSocket;
+			var messages = document.getElementById("messages");
+
+			function hello() {
+				$.ajax({
+					type : 'GET',
+					url : 'http://' + document.location.host
+							+ document.location.pathname + 'rest/hello?name='
+							+ document.getElementById("nameinput").value,
+					success : function(data, status, xhttp) {
+						$('#helloMsg').append(data)
+					}
+				});
+			}
+            
+            $(document).ready(function() {
+                webSocket = webSocket = new WebSocket("ws://" + document.location.host
+                  + document.location.pathname + "messageEndpoint");
+            
+			    webSocket.onmessage = function(event) {
+	     		  writeResponse(event.data);
+			    };
+            });
+
+			function writeResponse(text) {
+				messages.innerHTML += "<br/>" + text;
+			}
+		</script>
+
+</body>
 </html>

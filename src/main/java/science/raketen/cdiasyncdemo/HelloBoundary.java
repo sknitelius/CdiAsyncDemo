@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -43,5 +44,10 @@ public class HelloBoundary {
       asyncCDIBean.asyncTask();
     }
     return "Response by: " + Thread.currentThread().getName() + " Msg: " + helloFuture.get();
+  }
+
+  public void listen(@Observes String sysout) {
+    int i = 1 + 1;
+    String x = (i / 2) + sysout;
   }
 }
