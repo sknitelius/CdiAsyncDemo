@@ -27,11 +27,12 @@ public class SlowRunningProcessor {
   private MessageEndpoint messageEndpoint;
 
   @CDIAsynchronous
-  public void asyncTask() {
+  public void asyncTask(int i) {
     try {
       long sleep = 500 + (long) (Math.random() * 5000l);
       Thread.sleep(sleep);
-      messageEndpoint.pushMessage(this + " " + Thread.currentThread().getName() + " sleept: " + sleep);
+      String msg = "Task: " + i + " completed by: " + Thread.currentThread().getName() + " sleept: " + sleep;
+      messageEndpoint.pushMessage(msg);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -39,8 +40,8 @@ public class SlowRunningProcessor {
 
   @CDIAsynchronous
   public CompletableFuture<String> hello(String name) {
-    return CompletableFuture
-        .completedFuture("Hello " + name + "! produced by thread: " + Thread.currentThread().getName());
+    String msg = "Hello " + name + "! produced by thread: " + Thread.currentThread().getName();
+    return CompletableFuture.completedFuture(msg);
   }
 
 }

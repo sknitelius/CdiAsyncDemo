@@ -40,8 +40,8 @@ public class HelloBoundary {
 
     Future<String> helloFuture = asyncCDIBean.hello(name);
 
-    for (int i = 0; i < 100; i++) {
-      asyncCDIBean.asyncTask();
+    for (int i = 1; i <= 10; i++) {
+      asyncCDIBean.asyncTask(i);
     }
     return "Response by: " + Thread.currentThread().getName() + " Msg: " + helloFuture.get();
   }
