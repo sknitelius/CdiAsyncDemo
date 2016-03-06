@@ -10,5 +10,5 @@ applications:
    IBM_JVM_LICENSE: L-JWOD-9SYNCP
    IBM_LIBERTY_LICENSE: L-MCAO-9SYMVC
    JBP_CONFIG_IBMJDK: 'version: 1.8.+'
-   JBP_CONFIG_LIBERTY "app_archive: {features: [javaee-7.0]}"
+   JBP_CONFIG_LIBERTY: 'app_archive: {features: [javaee-7.0]}'
 
