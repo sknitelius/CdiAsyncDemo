@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Echo Chamber</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
+  <title>CDI Asynchronous Demo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
-<body>
 
+<body style="background-color: #20343E;">
   <div>
-    <input type="text" id="nameinput" />
+  <span>
+    <i class="fa fa-code fa-3x" style="color:white">CDI Asynchronous Demo</i>
+  </span>
+  <span style="float: right;">
+    <a href="http://www.knitelius.com" target="_blanke"><i class="fa fa-home fa-1x" style="color:white">{Stephan}Knitelius</i></a>
+    <a href="https://github.com/sknitelius/CdiAsyncDemo" target="_blanke"><i class="fa fa-github fa-1x" style="color:white"></i></a>
+    <a href="https://www.twitter.com/sknitelius" target="_blanke"><i class="fa fa-twitter fa-1x" style="color:white"></i></a>
+  </span>
   </div>
-  <div>
-    <button type="button" onclick="hello();">Hello</button>
+  <div style="background-color: #2d3f49;">
+    <span><button type="button" onclick="hello();">Hello</button></span> 
+    <span><input type="text" id="nameinput" /></span> 
   </div>
-  <div id="helloMsg"></div>
+  <div id="helloMsgOutput" style="height: 30px; width=230px; background-color: #5596e6;"></div>
 
-  <div id="messages"></div>
+  <div style="background-color: #2d3f49;">
+    <span><input type="number" id="noTasks" value="5" max="15" /></span>
+    <span><button type="button" onclick="startAsyncTasks();">Start asynchronous tasks</button></span>
+  </div>
+  <div id="messages" style="overflow: scroll; overflow-x: hidden; height: 400px; width=230px; background-color: #5596e6;"></div>
 
-  <!-- Script to utilise the WebSocket -->
-  <script
-    src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script type="text/javascript">
 			var webSocket;
 			var messages = document.getElementById("messages");
@@ -31,24 +42,35 @@
 							+ document.location.pathname + 'rest/hello?name='
 							+ document.getElementById("nameinput").value,
 					success : function(data, status, xhttp) {
-						$('#helloMsg').append(data)
+						$('#helloMsgOutput').empty().append(data);
 					}
 				});
 			}
-            
-            $(document).ready(function() {
-                webSocket = webSocket = new WebSocket("ws://" + document.location.host
-                  + document.location.pathname + "messageEndpoint");
-            
-			    webSocket.onmessage = function(event) {
-	     		  writeResponse(event.data);
-			    };
-            });
+
+			function startAsyncTasks() {
+				$.ajax({
+					type : 'GET',
+					url : 'http://' + document.location.host
+							+ document.location.pathname + 'rest/asyncTasks/start?tasks='
+                            + $('#noTasks').val()
+				});
+			}
+
+			$(document).ready(
+					function() {
+						webSocket = new WebSocket("ws://"
+								+ document.location.host
+								+ document.location.pathname
+								+ "messageEndpoint");
+
+						webSocket.onmessage = function(event) {
+							writeResponse(event.data);
+						};
+					});
 
 			function writeResponse(text) {
 				messages.innerHTML += "<br/>" + text;
 			}
 		</script>
-
 </body>
 </html>

@@ -29,7 +29,7 @@ public class SlowRunningProcessor {
   @CDIAsynchronous
   public void asyncTask(int i) {
     try {
-      long sleep = 500 + (long) (Math.random() * 5000l);
+      long sleep = 500 + (long) (Math.random() * 1000l);
       Thread.sleep(sleep);
       String msg = "Task: " + i + " completed by: " + Thread.currentThread().getName() + " sleept: " + sleep;
       messageEndpoint.pushMessage(msg);

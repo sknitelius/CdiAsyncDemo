@@ -16,7 +16,6 @@
 package science.raketen.cdiasyncdemo;
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -26,18 +25,22 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-@Path("hello")
+@Path("asyncTasks")
 @RequestScoped
-public class HelloBoundary {
+public class AsyncTasksBoundary {
 
   @Inject
   private SlowRunningProcessor asyncCDIBean;
 
   @GET
+  @Path("start")
   @Produces(MediaType.TEXT_PLAIN)
-  public String sayHello(@QueryParam("name") String name) throws InterruptedException, ExecutionException {
-    Future<String> helloFuture = asyncCDIBean.hello(name);
-    return "Response by: " + Thread.currentThread().getName() + " Msg: " + helloFuture.get();
+  public String startAsyncTasks(@QueryParam("tasks") Integer noTasks) throws InterruptedException, ExecutionException {
+    noTasks = noTasks == null ? 1 : noTasks;
+    for (int i = 1; i <= noTasks && i <= 15; i++) {
+      asyncCDIBean.asyncTask(i);
+    }
+    return "Started " + noTasks + " asynchronous Tasks.";
   }
 
 }
