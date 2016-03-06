@@ -6,5 +6,5 @@ applications:
   name: CdiAsyncDemo
   host: CdiAsyncDemo
   disk_quota: 1024M
-  IBM_JVM_LICENSE: {License Number}
+  IBM_JVM_LICENSE: L-JWOD-9SYNCP
 
