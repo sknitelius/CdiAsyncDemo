@@ -17,8 +17,8 @@
 
 
 	<modules>
-		<module>cdiasyncdemo-web</module>
-		<module>cdiasyncdemo-test</module>
+		<module>CdiAsyncDemo-web</module>
+		<module>CdiAsyncDemo-test</module>
 	</modules>
 
 	<build>
