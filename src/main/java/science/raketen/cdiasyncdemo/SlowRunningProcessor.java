@@ -31,7 +31,7 @@ public class SlowRunningProcessor {
     try {
       long sleep = 500 + (long) (Math.random() * 1000l);
       Thread.sleep(sleep);
-      String msg = "Task: " + i + " completed by: " + Thread.currentThread().getName() + " sleept: " + sleep;
+      String msg = "Task: " + i + " completed by: " + Thread.currentThread().getName() + " slept: " + sleep;
       messageEndpoint.pushMessage(msg);
     } catch (Exception e) {
       throw new RuntimeException(e);
