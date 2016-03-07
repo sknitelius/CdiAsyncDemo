@@ -15,7 +15,7 @@ import com.airhacks.rulz.jaxrsclient.JAXRSClientProvider;
 public class JaxRsTest {
   @Rule
   public JAXRSClientProvider provider = JAXRSClientProvider
-      .buildWithURI("http://cdiasyncdemo-dev.eu-gb.mybluemix.net/rest/hello");
+      .buildWithURI("http://cdiasyncdemo.eu-gb.mybluemix.net/rest/hello");
 
   @Test
   public void testHello() {
